@@ -1,0 +1,139 @@
+<div class="ed-sidebar">
+  <div
+    class="translate-x-[100%] transition-transform ease-linear duration-300 fixed right-0 w-full max-w-[25%] xl:max-w-[30%] lg:max-w-[40%] md:max-w-[50%] sm:max-w-[60%] xxs:max-w-full bg-white h-full z-[100] overflow-auto"
+  >
+    <!-- heading -->
+    <div
+      class="ed-sidebar-heading p-[20px] lg:p-[20px] border-b border-edgray/20"
+    >
+      <div class="logo flex justify-between items-center">
+        <a href="index.html"><img src="assets/img/logo.png" alt="logo" /></a>
+
+        <button
+          type="button"
+          class="ed-sidebar-close-btn border border-edgray/20 w-[45px] aspect-square shrink-0 text-black text-[22px] rounded-full hover:text-edpurple"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- mobile menu -->
+    <div class="ed-header-nav-in-mobile"></div>
+  </div>
+</div>
+<!-- Header -->
+
+<header
+  class="absolute z-[99] top-0 inset-x-[100px] xxl:inset-x-[30px] xl:inset-x-0 bg-white rounded-bl-[10px] rounded-br-[10px]"
+>
+  <!-- top header -->
+  <div
+    class="bg-monza-800 flex items-center justify-between px-2 lg:justify-between lg:gap-x-[20px]"
+  >
+    <!-- contacts -->
+    <div
+      class="flex items-center gap-x-[32px] xl:gap-x-[15px] gap-y-[6px] py-[18px] pl-[30px] xl:pl-[10px] lg:pl-0 lg:order-2 sm:pt-0 sm:pb-[10px] xl:hidden"
+    >
+      <!-- single contact -->
+      <a
+        href="mailto:info@example.com"
+        class="flex items-center gap-x-[10px] font-light text-white/80"
+      >
+        <span class="icon shrink-0 xl:hidden">
+          <img src="assets/img/icon/mail.svg" alt="icon" />
+        </span>
+        <span>info@example.com</span>
+      </a>
+      <a
+        href="tel:+998 97 701-49-99"
+        class="flex items-center gap-x-[10px] font-light text-white text-bold"
+      >
+        <span class="icon shrink-0 xl:hidden">
+          <img src="assets/img/icon/phone.svg" alt="icon" />
+        </span>
+        <span>+998 97 701-49-99</span>
+      </a>
+      <!-- single contact -->
+    </div>
+  </div>
+
+  <!-- bottom header -->
+  <div
+    class="px-[30px] xxl:px-[15px] lg:px-[20px] py-[28px] lg:py-[18px] flex justify-between items-center"
+  >
+    <div class="logo xxs:max-w-[40%]">
+      <a href="index.html"
+        ><img src="assets/img/logo.png" alt="logo" class="logo" /></a
+      >
+    </div>
+
+    <div class="flex lg:items-center lg:gap-[60px] xxs:gap-[30px]">
+      <div class="flex items-center gap-[200px] xl:gap-[30px] lg:gap-y-0">
+        <div class="ed-header-nav-container">
+          <ul
+            class="to-go-to-sidebar-in-mobile ed-header-nav flex lg:flex-col gap-x-[43px] xl:gap-x-[33px] font-kanit text-[17px] font-normal"
+          >
+            <li class="has-sub-menu relative">
+              <a role="button">Home</a>
+
+              <ul class="ed-header-submenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index-2.html">Home 02</a></li>
+              </ul>
+            </li>
+            <li><a href="about.html">About us</a></li>
+            <li class="has-sub-menu relative">
+              <a role="button">Courses</a>
+
+              <ul class="ed-header-submenu">
+                <li><a href="course-grid.html">Courses Grid</a></li>
+                <li><a href="course-filter.html">Courses Filter</a></li>
+                <li><a href="course-details.html">Course Details</a></li>
+              </ul>
+            </li>
+            <li class="has-sub-menu relative">
+              <a role="button">Pages</a>
+
+              <ul class="ed-header-submenu">
+                <li><a href="teachers.html">Teachers</a></li>
+                <li><a href="teacher-details.html">Teacher Details</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="events-2.html">Events V.2</a></li>
+                <li><a href="event-details.html">Event Details</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="coming-soon.html">Coming Soon Page</a></li>
+                <li><a href="404.html">Error 404</a></li>
+              </ul>
+            </li>
+            <li class="has-sub-menu relative">
+              <a role="button">News</a>
+
+              <ul class="ed-header-submenu">
+                <li><a href="news-grid.html">News Grid</a></li>
+                <li><a href="news-list.html">News List</a></li>
+                <li><a href="news-details.html">News Details</a></li>
+              </ul>
+            </li>
+            <li><a href="contact.html">Contact us</a></li>
+          </ul>
+        </div>
+
+        <a
+          href="contact.html"
+          class="ed-btn bg-monza-800 bto-go-to-sidebar-in-mobile lg:m-[20px]"
+          >apply now</a
+        >
+      </div>
+    </div>
+
+    <!-- mobile menu button -->
+    <button
+      type="button"
+      class="ed-mobile-menu-open-btn hidden lg:inline-block text-edblue text-[18px]"
+    >
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</header>

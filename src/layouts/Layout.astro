@@ -1,0 +1,32 @@
+---
+import Header from "../components/Header.astro";
+interface Props {
+  title: string;
+  isHeader?: boolean;
+}
+
+const { title, isHeader = true } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="assets/vendor/font-awesome/all.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <title>{title}</title>
+  </head>
+  <body>
+    {isHeader && <Header />}
+    <slot />
+    <script src="../../public/assets/vendor/swiper/swiper-bundle.min.js"
+    ></script>
+    <script src="../../public/assets/vendor/fslightbox/fslightbox.js"></script>
+    <script src="../../public/assets/js/main.js"></script>
+  </body>
+</html>
