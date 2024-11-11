@@ -1,7 +1,7 @@
 ---
 import AdminLayout from "../../../../layouts/AdminLayout.astro";
 import { pb } from "../../../../lib/pocketbase";
-
+export const prerender = false;
 // This is required for dynamic routes in Astro
 export async function getStaticPaths() {
   // Fetch all post IDs
