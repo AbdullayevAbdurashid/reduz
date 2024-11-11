@@ -5,108 +5,7 @@
   </div>
 </div>
 
-<!-- cart -->
-<div class="ed-cart-bar group">
-  <div
-    class="w-[420px] max-w-full fixed z-[100] right-0 top-0 h-full bg-white flex flex-col translate-x-[100%] duration-[400ms] group-[.active]:translate-x-0"
-  >
-    <!-- heading -->
-    <div
-      class="flex items-center justify-between px-[25px] border-b border-edgray/20 pb-[23px] pt-[22px]"
-    >
-      <h5 class="text-[20px]">My Cart List</h5>
-      <h6>(03 Items)</h6>
-    </div>
-
-    <!-- cart items -->
-    <div>
-      <!-- single cart item -->
-      <div
-        class="flex items-center gap-[20px] py-[30px] px-[25px] border-b border-edgray/20"
-      >
-        <img
-          src="assets/img/cart-item-1.jpg"
-          alt="Cart Item Image"
-          class="rounded-[10px] shrink-0"
-        />
-        <div class="grow">
-          <h6 class="font-medium text-[18px] text-edblue">
-            <a href="course-details.html" class="hover:text-edpurple"
-              >Web Development</a
-            >
-          </h6>
-          <h6 class="font-medium text-edgray">$15.00</h6>
-        </div>
-        <button class="text-[20px] text-edgray shrink-0 hover:text-edpurple">
-          x
-        </button>
-      </div>
-
-      <!-- single cart item -->
-      <div
-        class="flex items-center gap-[20px] py-[30px] px-[25px] border-b border-edgray/20"
-      >
-        <img
-          src="assets/img/cart-item-2.jpg"
-          alt="Cart Item Image"
-          class="rounded-[10px] shrink-0"
-        />
-        <div class="grow">
-          <h6 class="font-medium text-[18px] text-edblue">
-            <a href="course-details.html" class="hover:text-edpurple"
-              >Digital Marketing</a
-            >
-          </h6>
-          <h6 class="font-medium text-edgray">$15.00</h6>
-        </div>
-        <button class="text-[20px] text-edgray shrink-0 hover:text-edpurple">
-          x
-        </button>
-      </div>
-
-      <!-- single cart item -->
-      <div
-        class="flex items-center gap-[20px] py-[30px] px-[25px] border-b border-edgray/20"
-      >
-        <img
-          src="assets/img/cart-item-3.jpg"
-          alt="Cart Item Image"
-          class="rounded-[10px] shrink-0"
-        />
-        <div class="grow">
-          <h6 class="font-medium text-[18px] text-edblue">
-            <a href="course-details.html" class="hover:text-edpurple"
-              >WordPress Development</a
-            >
-          </h6>
-          <h6 class="font-medium text-edgray">$15.00</h6>
-        </div>
-        <button class="text-[20px] text-edgray shrink-0 hover:text-edpurple">
-          x
-        </button>
-      </div>
-    </div>
-
-    <!-- cart bottom -->
-    <div class="mt-auto px-[25px] mb-[30px]">
-      <div
-        class="flex items-center justify-between font-medium text-[18px] text-edblue mb-[33px]"
-      >
-        <span>Total</span>
-        <span>$999</span>
-      </div>
-      <div class="space-y-[15px]">
-        <a
-          href="#"
-          class="ed-btn w-full !rounded-[10px] !bg-transparent border border-edblue !text-edblue hover:!bg-edblue hover:!text-white"
-          >Proceed to checkout</a
-        >
-        <a href="#" class="ed-btn w-full !rounded-[10px]">Proceed to checkout</a
-        >
-      </div>
-    </div>
-  </div>
-</div>
+<!-- cart section removed since it's not needed for an engineering school -->
 
 <!-- search -->
 <div class="ed-search group">
@@ -117,7 +16,7 @@
     <input
       type="search"
       name="ed-search"
-      placeholder="Search Here..."
+      placeholder="Qidiruv..."
       class="bg-transparent w-full focus:outline-none"
     />
     <button class="text-[25px] md:text-[22px] xxs:text-[20px]">
@@ -125,17 +24,21 @@
     </button>
   </form>
 </div>
+
 <div class="ed-sidebar">
   <div
     class="translate-x-[100%] transition-transform ease-linear duration-300 fixed right-0 w-full max-w-[25%] xl:max-w-[30%] lg:max-w-[40%] md:max-w-[50%] sm:max-w-[60%] xxs:max-w-full bg-white h-full z-[100] overflow-auto"
   >
-    <!-- heading -->
     <div
       class="ed-sidebar-heading p-[20px] lg:p-[20px] border-b border-edgray/20"
     >
       <div class="logo flex justify-between items-center">
-        <a href="/"><img src="assets/img/logo.png" alt="logo" /></a>
-
+        <a href="/"
+          ><img
+            src="assets/img/logo.png"
+            alt="Kelajak Muhandislari Maktabi"
+          /></a
+        >
         <button
           type="button"
           class="ed-sidebar-close-btn border border-edgray/20 w-[45px] aspect-square shrink-0 text-black text-[22px] rounded-full hover:text-edpurple"
@@ -144,13 +47,11 @@
         </button>
       </div>
     </div>
-
-    <!-- mobile menu -->
     <div class="ed-header-nav-in-mobile"></div>
   </div>
 </div>
-<!-- Header -->
 
+<!-- Header -->
 <header
   class="absolute z-[99] top-0 inset-x-[100px] xxl:inset-x-[30px] xl:inset-x-0 bg-white rounded-bl-[10px] rounded-br-[10px]"
 >
@@ -158,30 +59,27 @@
   <div
     class="bg-monza-800 flex items-center justify-between px-2 lg:justify-between lg:gap-x-[20px]"
   >
-    <!-- contacts -->
     <div
       class="flex items-center gap-x-[32px] xl:gap-x-[15px] gap-y-[6px] py-[18px] pl-[30px] xl:pl-[10px] lg:pl-0 lg:order-2 sm:pt-0 sm:pb-[10px] xl:hidden"
     >
-      <!-- single contact -->
       <a
-        href="mailto:info@example.com"
+        href="mailto:info@kelajakmuhandislari.uz"
         class="flex items-center gap-x-[10px] font-light text-white/80"
       >
         <span class="icon shrink-0 xl:hidden">
-          <img src="assets/img/icon/mail.svg" alt="icon" />
+          <img src="assets/img/icon/mail.svg" alt="email" />
         </span>
-        <span>info@example.com</span>
+        <span>info@kelajakmuhandislari.uz</span>
       </a>
       <a
-        href="tel:+998 97 701-49-99"
+        href="tel:+998977014999"
         class="flex items-center gap-x-[10px] font-light text-white text-bold"
       >
         <span class="icon shrink-0 xl:hidden">
-          <img src="assets/img/icon/phone.svg" alt="icon" />
+          <img src="assets/img/icon/phone.svg" alt="telefon" />
         </span>
         <span>+998 97 701-49-99</span>
       </a>
-      <!-- single contact -->
     </div>
   </div>
 
@@ -191,7 +89,11 @@
   >
     <div class="logo w-[20%] md:w-[80%]">
       <a href="index.html"
-        ><img src="assets/img/logo.png" alt="logo" class="logo" /></a
+        ><img
+          src="assets/img/logo.png"
+          alt="Kelajak Muhandislari Maktabi"
+          class="logo"
+        /></a
       >
     </div>
 
@@ -201,49 +103,27 @@
           <ul
             class="to-go-to-sidebar-in-mobile ed-header-nav flex lg:flex-col gap-x-[43px] xl:gap-x-[33px] font-kanit text-[17px] font-normal"
           >
+            <li><a href="index.html">Bosh Sahifa</a></li>
+            <li><a href="about.html">Biz Haqimizda</a></li>
             <li class="has-sub-menu relative">
-              <a role="button">Home</a>
-
+              <a role="button">Kurslar</a>
               <ul class="ed-header-submenu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index-2.html">Home 02</a></li>
-              </ul>
-            </li>
-            <li><a href="about.html">About us</a></li>
-            <li class="has-sub-menu relative">
-              <a role="button">Courses</a>
-
-              <ul class="ed-header-submenu">
-                <li><a href="course-grid.html">Courses Grid</a></li>
-                <li><a href="course-filter.html">Courses Filter</a></li>
-                <li><a href="course-details.html">Course Details</a></li>
+                <li><a href="courses-5-6.html">5-6 yoshlilar uchun</a></li>
+                <li><a href="courses-7-17.html">7-17 yoshlilar uchun</a></li>
+                <li><a href="courses-teachers.html">O'qituvchilar uchun</a></li>
               </ul>
             </li>
             <li class="has-sub-menu relative">
-              <a role="button">Pages</a>
-
+              <a role="button">Ma'lumotlar</a>
               <ul class="ed-header-submenu">
-                <li><a href="teachers.html">Teachers</a></li>
-                <li><a href="teacher-details.html">Teacher Details</a></li>
-                <li><a href="events.html">Events</a></li>
-                <li><a href="events-2.html">Events V.2</a></li>
-                <li><a href="event-details.html">Event Details</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="coming-soon.html">Coming Soon Page</a></li>
-                <li><a href="404.html">Error 404</a></li>
+                <li><a href="teachers.html">O'qituvchilar</a></li>
+                <li><a href="events.html">Tadbirlar</a></li>
+                <li><a href="gallery.html">Galereya</a></li>
+                <li><a href="faq.html">Ko'p so'raladigan savollar</a></li>
               </ul>
             </li>
-            <li class="has-sub-menu relative">
-              <a role="button">News</a>
-
-              <ul class="ed-header-submenu">
-                <li><a href="news-grid.html">News Grid</a></li>
-                <li><a href="news-list.html">News List</a></li>
-                <li><a href="news-details.html">News Details</a></li>
-              </ul>
-            </li>
-            <li><a href="contact.html">Contact us</a></li>
+            <li><a href="news.html">Yangiliklar</a></li>
+            <li><a href="contact.html">Aloqa</a></li>
           </ul>
         </div>
 
