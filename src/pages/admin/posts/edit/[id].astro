@@ -1,0 +1,193 @@
+---
+import AdminLayout from "../../../../layouts/AdminLayout.astro";
+import { pb } from "../../../../lib/pocketbase";
+
+// This is required for dynamic routes in Astro
+export async function getStaticPaths() {
+  // Fetch all post IDs
+  const posts = await pb.collection("posts").getList(1, 100, {
+    fields: "id", // Only fetch IDs for efficiency
+  });
+
+  // Return an array of objects with params for each post
+  return posts.items.map((post) => ({
+    params: { id: post.id },
+  }));
+}
+
+// Get the specific post data
+const { id } = Astro.params;
+let post;
+try {
+  post = await pb.collection("posts").getOne(id);
+} catch (error) {
+  return Astro.redirect("/admin");
+}
+---
+
+<AdminLayout title="Edit Post">
+  <!-- Rest of your template remains the same -->
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://unpkg.com/trix@2.0.0/dist/trix.css"
+  />
+  <script
+    type="text/javascript"
+    src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-2xl font-semibold text-gray-900 mb-6">Edit Post</h1>
+
+    <form id="editPostForm" class="space-y-6" data-post-id={post.id}>
+      <div>
+        <label for="title" class="block text-sm font-medium text-gray-700"
+          >Title</label
+        >
+        <input
+          type="text"
+          name="title"
+          id="title"
+          required
+          value={post.title}
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-edpurple focus:border-edpurple sm:text-sm"
+        />
+      </div>
+
+      <div>
+        <label for="content" class="block text-sm font-medium text-gray-700"
+          >Content</label
+        >
+        <input
+          id="content-input"
+          type="hidden"
+          name="content"
+          value={post.content}
+        />
+        <trix-editor
+          input="content-input"
+          class="trix-content prose min-h-[400px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
+        ></trix-editor>
+      </div>
+
+      <div>
+        <label
+          for="featured_image"
+          class="block text-sm font-medium text-gray-700"
+        >
+          Featured Image
+        </label>
+        <input
+          type="file"
+          id="featured_image"
+          name="featured_image"
+          accept="image/*"
+          class="mt-1 block w-full"
+        />
+        {
+          post.featured_image && (
+            <img
+              src={`${import.meta.env.PUBLIC_POCKETBASE_URL}/api/files/${post.collectionId}/${post.id}/${post.featured_image}`}
+              alt="Current featured image"
+              class="mt-2 h-32 w-auto"
+            />
+          )
+        }
+      </div>
+
+      <div class="flex items-center">
+        <input
+          id="published"
+          name="published"
+          type="checkbox"
+          checked={post.published}
+          class="h-4 w-4 text-edpurple focus:ring-edpurple border-gray-300 rounded"
+        />
+        <label for="published" class="ml-2 block text-sm text-gray-900">
+          Published
+        </label>
+      </div>
+
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-edpurple hover:bg-edpurple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-edpurple"
+        >
+          Update Post
+        </button>
+      </div>
+
+      <div id="errorMessage" class="text-red-500 text-center hidden"></div>
+    </form>
+  </div>
+</AdminLayout>
+
+<style>
+  trix-editor {
+    min-height: 400px;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  .trix-button-group {
+    border-color: #e5e7eb !important;
+  }
+
+  .trix-button {
+    border-bottom: none !important;
+  }
+
+  .trix-content {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+</style>
+
+<script>
+  import { pb } from "../../../../lib/pocketbase";
+  import slugify from "slugify";
+
+  // Redirect if not authenticated
+  if (!pb.authStore.isValid) {
+    window.location.href = "/admin/login";
+  }
+
+  const form = document.getElementById("editPostForm");
+  const errorMessage = document.getElementById("errorMessage");
+  const postId = form?.dataset.postId;
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    const title = (document.getElementById("title") as HTMLInputElement).value;
+    const content = (
+      document.getElementById("content-input") as HTMLInputElement
+    ).value;
+    const published = (document.getElementById("published") as HTMLInputElement)
+      .checked;
+    const fileInput = document.getElementById(
+      "featured_image"
+    ) as HTMLInputElement;
+
+    try {
+      formData.append("title", title);
+      formData.append("slug", slugify(title, { lower: true }));
+      formData.append("content", content);
+      formData.append("published", published.toString());
+
+      if (fileInput?.files?.[0]) {
+        formData.append("featured_image", fileInput.files[0]);
+      }
+
+      await pb.collection("posts").update(postId, formData);
+      window.location.href = "/admin";
+    } catch (error) {
+      if (errorMessage) {
+        errorMessage.textContent =
+          "Error updating post: " + (error as Error).message;
+        errorMessage.classList.remove("hidden");
+      }
+    }
+  });
+</script>

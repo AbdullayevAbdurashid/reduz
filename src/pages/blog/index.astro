@@ -1,0 +1,24 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { api } from "../../lib/api";
+import Card from "../../components/Card.astro";
+// Get latest 3 posts
+const { items: latestPosts } = await api.getPosts({ perPage: 10 });
+---
+
+<Layout title="Yangiliklar">
+  <!-- MAIN CONTENT START -->
+  <div class="ed-event-details-content py-[120px] xl:py-[80px] md:py-[60px]">
+    <div
+      class="mx-[19.71%] xxxl:mx-[14.71%] xxl:mx-[9.71%] xl:mx-[5.71%] md:mx-[12px]"
+    >
+      <div
+        class="grid mt-4 grid-cols-3 md:grid-cols-2 xs:grid-cols-1 gap-[30px] lg:gap-[15px]"
+      >
+        <!-- single news -->
+        {latestPosts.map((post) => <Card post={post} />)}
+      </div>
+    </div>
+  </div>
+  <!-- MAIN CONTENT END -->
+</Layout>

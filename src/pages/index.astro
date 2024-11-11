@@ -1,9 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Teacher from "../components/Teacher.astro";
+import Card from "../components/Card.astro";
+
+import { api } from "../lib/api";
+
+// Get latest 3 posts
+const { items: latestPosts } = await api.getPosts({ perPage: 3 });
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Muxandislik maktabi">
   <main>
     <!-- BANNER SECTION START -->
     <section>
@@ -1143,300 +1149,109 @@ import Teacher from "../components/Teacher.astro";
         </div>
       </div>
       <!-- TEACHER SECTION END -->
-
-      <!-- BLOG SECTION START -->
-      <section
-        class="py-[120px] xl:py-[80px] md:py-[60px] relative z-[1] overflow-hidden"
+    </section>
+    <!-- BLOG SECTION START -->
+    <section
+      class="py-[120px] xl:py-[80px] md:py-[60px] relative z-[1] overflow-hidden"
+    >
+      <div
+        class="mx-[19.71%] xxxl:mx-[14.71%] xxl:mx-[9.71%] xl:mx-[5.71%] md:mx-[12px]"
       >
+        <!-- heading -->
+        <div class="text-center mb-[46px] md:mb-[30px]">
+          <h6 class="ed-section-sub-title">Blog</h6>
+          <h2 class="ed-section-title">Yangiliklar</h2>
+        </div>
+
+        <!-- blog cards -->
         <div
-          class="mx-[19.71%] xxxl:mx-[14.71%] xxl:mx-[9.71%] xl:mx-[5.71%] md:mx-[12px]"
+          class="grid grid-cols-3 md:grid-cols-2 xs:grid-cols-1 xs:max-w-[65%] xxs:max-w-full xs:mx-auto gap-[30px] lg:gap-[20px] sm:gap-[15px]"
         >
-          <!-- heading -->
-          <div class="text-center mb-[46px] md:mb-[30px]">
-            <h6 class="ed-section-sub-title">Latest Blog</h6>
-            <h2 class="ed-section-title">Our Latest News</h2>
-          </div>
-
-          <!-- blog cards -->
-          <div
-            class="grid grid-cols-3 md:grid-cols-2 xs:grid-cols-1 xs:max-w-[65%] xxs:max-w-full xs:mx-auto gap-[30px] lg:gap-[20px] sm:gap-[15px]"
-          >
-            <!-- single blog -->
-            <div
-              class="et-blog bg-white border border-[#E5E5E5] rounded-[8px] p-[24px] lg:p-[20px] sm:p-[18px] relative group"
-            >
-              <div class="ed-blog__img relative z-[1] mb-[45px]">
-                <div class="overflow-hidden rounded-[6px]">
-                  <img
-                    src="assets/img/blog-1.png"
-                    alt="blog image"
-                    class="w-full aspect-[37/24] object-cover transition duration-[400ms] group-hover:scale-105"
-                  />
-                </div>
-
-                <div
-                  class="bg-white absolute left-[20px] bottom-0 translate-y-[50%] rounded-[10px] font-bold text-[14px] text-black inline-block uppercase overflow-hidden text-center shadow-[0_4px_30px_rgba(0,0,0,0.08)]"
-                >
-                  <span
-                    class="bg-edyellow text-white block py-[3px] rounded-[10px]"
-                    >10</span
-                  >
-                  <span class="px-[11px] py-[2px] block">June</span>
-                </div>
-              </div>
-
-              <div class="et-blog__txt">
-                <div class="et-blog__infos flex gap-x-[30px] mb-[13px]">
-                  <!-- single info -->
-                  <div class="et-blog-info flex items-center gap-x-[10px]">
-                    <span class="icon"
-                      ><img src="assets/img/icon/user.svg" alt="icon" /></span
-                    >
-                    <span class="text font-medium text-[14px] text-edgray"
-                      >By Admin</span
-                    >
-                  </div>
-
-                  <!-- single info -->
-                  <div class="et-blog-info flex items-center gap-x-[10px]">
-                    <span class="icon"
-                      ><img src="assets/img/icon/tag.svg" alt="icon" /></span
-                    >
-                    <span class="text font-medium text-[14px] text-edgray"
-                      >Meditation</span
-                    >
-                  </div>
-                </div>
-
-                <h4
-                  class="et-blog__title text-[20px] sm:text-[18px] font-semibold leading-[1.6] mb-[20px]"
-                >
-                  <a href="blog-details.html" class="hover:text-edpurple"
-                    >Which Yoga Hybrid Is Right For You?</a
-                  >
-                </h4>
-
-                <a
-                  href="blog-details.html"
-                  class="font-semibold text-[16px] text-edgray inline-flex items-center gap-[10px] hover:text-edpurple"
-                  >Read More
-                  <span><i class="fa-solid fa-arrow-right-long"></i></span></a
-                >
-              </div>
+          <!-- single blog -->
+          {latestPosts.map((post) => <Card post={post} />)}
+        </div>
+        <!-- partners -->
+        <div
+          class="ed-partners-slider swiper mt-[100px] xl:mt-[70px] md:mt-[50px]"
+        >
+          <div class="swiper-wrapper">
+            <!-- single partner -->
+            <div class="swiper-slide">
+              <img
+                src="assets/img/partner-1.png"
+                alt="Partner Logo"
+                class="xxs:mx-auto"
+              />
             </div>
-
-            <!-- single blog -->
-            <div
-              class="et-blog bg-white border border-[#E5E5E5] rounded-[8px] p-[24px] lg:p-[20px] sm:p-[18px] relative group"
-            >
-              <div class="ed-blog__img relative z-[1] mb-[45px]">
-                <div class="overflow-hidden rounded-[6px]">
-                  <img
-                    src="assets/img/blog-2.png"
-                    alt="blog image"
-                    class="w-full aspect-[37/24] object-cover transition duration-[400ms] group-hover:scale-105"
-                  />
-                </div>
-
-                <div
-                  class="bg-white absolute left-[20px] bottom-0 translate-y-[50%] rounded-[10px] font-bold text-[14px] text-black inline-block uppercase overflow-hidden text-center shadow-[0_4px_30px_rgba(0,0,0,0.08)]"
-                >
-                  <span
-                    class="bg-edyellow text-white block py-[3px] rounded-[10px]"
-                    >10</span
-                  >
-                  <span class="px-[11px] py-[2px] block">June</span>
-                </div>
-              </div>
-
-              <div class="et-blog__txt">
-                <div class="et-blog__infos flex gap-x-[30px] mb-[13px]">
-                  <!-- single info -->
-                  <div class="et-blog-info flex items-center gap-x-[10px]">
-                    <span class="icon"
-                      ><img src="assets/img/icon/user.svg" alt="icon" /></span
-                    >
-                    <span class="text font-medium text-[14px] text-edgray"
-                      >By Admin</span
-                    >
-                  </div>
-
-                  <!-- single info -->
-                  <div class="et-blog-info flex items-center gap-x-[10px]">
-                    <span class="icon"
-                      ><img src="assets/img/icon/tag.svg" alt="icon" /></span
-                    >
-                    <span class="text font-medium text-[14px] text-edgray"
-                      >Meditation</span
-                    >
-                  </div>
-                </div>
-
-                <h4
-                  class="et-blog__title text-[20px] sm:text-[18px] font-semibold leading-[1.6] mb-[20px]"
-                >
-                  <a href="blog-details.html" class="hover:text-edpurple"
-                    >Which Yoga Hybrid Is Right For You?</a
-                  >
-                </h4>
-
-                <a
-                  href="blog-details.html"
-                  class="font-semibold text-[16px] text-edgray inline-flex items-center gap-[10px] hover:text-edpurple"
-                  >Read More
-                  <span><i class="fa-solid fa-arrow-right-long"></i></span></a
-                >
-              </div>
+            <!-- single partner -->
+            <div class="swiper-slide">
+              <img
+                src="assets/img/partner-2.png"
+                alt="Partner Logo"
+                class="xxs:mx-auto"
+              />
             </div>
-
-            <!-- single blog -->
-            <div
-              class="et-blog bg-white border border-[#E5E5E5] rounded-[8px] p-[24px] lg:p-[20px] sm:p-[18px] relative group"
-            >
-              <div class="ed-blog__img relative z-[1] mb-[45px]">
-                <div class="overflow-hidden rounded-[6px]">
-                  <img
-                    src="assets/img/blog-3.png"
-                    alt="blog image"
-                    class="w-full aspect-[37/24] object-cover transition duration-[400ms] group-hover:scale-105"
-                  />
-                </div>
-
-                <div
-                  class="bg-white absolute left-[20px] bottom-0 translate-y-[50%] rounded-[10px] font-bold text-[14px] text-black inline-block uppercase overflow-hidden text-center shadow-[0_4px_30px_rgba(0,0,0,0.08)]"
-                >
-                  <span
-                    class="bg-edyellow text-white block py-[3px] rounded-[10px]"
-                    >10</span
-                  >
-                  <span class="px-[11px] py-[2px] block">June</span>
-                </div>
-              </div>
-
-              <div class="et-blog__txt">
-                <div class="et-blog__infos flex gap-x-[30px] mb-[13px]">
-                  <!-- single info -->
-                  <div class="et-blog-info flex items-center gap-x-[10px]">
-                    <span class="icon"
-                      ><img src="assets/img/icon/user.svg" alt="icon" /></span
-                    >
-                    <span class="text font-medium text-[14px] text-edgray"
-                      >By Admin</span
-                    >
-                  </div>
-
-                  <!-- single info -->
-                  <div class="et-blog-info flex items-center gap-x-[10px]">
-                    <span class="icon"
-                      ><img src="assets/img/icon/tag.svg" alt="icon" /></span
-                    >
-                    <span class="text font-medium text-[14px] text-edgray"
-                      >Meditation</span
-                    >
-                  </div>
-                </div>
-
-                <h4
-                  class="et-blog__title text-[20px] sm:text-[18px] font-semibold leading-[1.6] mb-[20px]"
-                >
-                  <a href="blog-details.html" class="hover:text-edpurple"
-                    >Which Yoga Hybrid Is Right For You?</a
-                  >
-                </h4>
-
-                <a
-                  href="blog-details.html"
-                  class="font-semibold text-[16px] text-edgray inline-flex items-center gap-[10px] hover:text-edpurple"
-                  >Read More
-                  <span><i class="fa-solid fa-arrow-right-long"></i></span></a
-                >
-              </div>
+            <!-- single partner -->
+            <div class="swiper-slide">
+              <img
+                src="assets/img/partner-3.png"
+                alt="Partner Logo"
+                class="xxs:mx-auto"
+              />
             </div>
-          </div>
-
-          <!-- partners -->
-          <div
-            class="ed-partners-slider swiper mt-[100px] xl:mt-[70px] md:mt-[50px]"
-          >
-            <div class="swiper-wrapper">
-              <!-- single partner -->
-              <div class="swiper-slide">
-                <img
-                  src="assets/img/partner-1.png"
-                  alt="Partner Logo"
-                  class="xxs:mx-auto"
-                />
-              </div>
-              <!-- single partner -->
-              <div class="swiper-slide">
-                <img
-                  src="assets/img/partner-2.png"
-                  alt="Partner Logo"
-                  class="xxs:mx-auto"
-                />
-              </div>
-              <!-- single partner -->
-              <div class="swiper-slide">
-                <img
-                  src="assets/img/partner-3.png"
-                  alt="Partner Logo"
-                  class="xxs:mx-auto"
-                />
-              </div>
-              <!-- single partner -->
-              <div class="swiper-slide">
-                <img
-                  src="assets/img/partner-4.png"
-                  alt="Partner Logo"
-                  class="xxs:mx-auto"
-                />
-              </div>
-              <!-- single partner -->
-              <div class="swiper-slide">
-                <img
-                  src="assets/img/partner-5.png"
-                  alt="Partner Logo"
-                  class="xxs:mx-auto"
-                />
-              </div>
-              <!-- single partner -->
-              <div class="swiper-slide">
-                <img
-                  src="assets/img/partner-6.png"
-                  alt="Partner Logo"
-                  class="xxs:mx-auto"
-                />
-              </div>
-              <!-- single partner -->
-              <div class="swiper-slide">
-                <img
-                  src="assets/img/partner-1.png"
-                  alt="Partner Logo"
-                  class="xxs:mx-auto"
-                />
-              </div>
-              <!-- single partner -->
-              <div class="swiper-slide">
-                <img
-                  src="assets/img/partner-2.png"
-                  alt="Partner Logo"
-                  class="xxs:mx-auto"
-                />
-              </div>
+            <!-- single partner -->
+            <div class="swiper-slide">
+              <img
+                src="assets/img/partner-4.png"
+                alt="Partner Logo"
+                class="xxs:mx-auto"
+              />
             </div>
-          </div>
-
-          <!-- vector -->
-          <div>
-            <img
-              src="assets/img/form-notice-vector-1.svg"
-              alt="vector"
-              class="absolute -z-[1] bottom-[288px] left-0 pointer-events-none"
-            />
+            <!-- single partner -->
+            <div class="swiper-slide">
+              <img
+                src="assets/img/partner-5.png"
+                alt="Partner Logo"
+                class="xxs:mx-auto"
+              />
+            </div>
+            <!-- single partner -->
+            <div class="swiper-slide">
+              <img
+                src="assets/img/partner-6.png"
+                alt="Partner Logo"
+                class="xxs:mx-auto"
+              />
+            </div>
+            <!-- single partner -->
+            <div class="swiper-slide">
+              <img
+                src="assets/img/partner-1.png"
+                alt="Partner Logo"
+                class="xxs:mx-auto"
+              />
+            </div>
+            <!-- single partner -->
+            <div class="swiper-slide">
+              <img
+                src="assets/img/partner-2.png"
+                alt="Partner Logo"
+                class="xxs:mx-auto"
+              />
+            </div>
           </div>
         </div>
-      </section>
-      <!-- BLOG SECTION END -->
+
+        <!-- vector -->
+        <div>
+          <img
+            src="assets/img/form-notice-vector-1.svg"
+            alt="vector"
+            class="absolute -z-[1] bottom-[288px] left-0 pointer-events-none"
+          />
+        </div>
+      </div>
     </section>
+    <!-- BLOG SECTION END -->
   </main>
 </Layout>

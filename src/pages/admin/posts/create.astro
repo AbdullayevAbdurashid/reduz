@@ -1,0 +1,197 @@
+---
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+---
+
+<AdminLayout title="Create Post">
+  <!-- Add Trix Editor Assets -->
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://unpkg.com/trix@2.0.0/dist/trix.css"
+  />
+  <script
+    type="text/javascript"
+    src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-2xl font-semibold text-gray-900 mb-6">Create New Post</h1>
+
+    <form id="createPostForm" class="space-y-6">
+      <div>
+        <label for="title" class="block text-sm font-medium text-gray-700"
+          >Title</label
+        >
+        <input
+          type="text"
+          name="title"
+          id="title"
+          required
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-edpurple focus:border-edpurple sm:text-sm"
+        />
+      </div>
+
+      <div>
+        <label for="content" class="block text-sm font-medium text-gray-700"
+          >Content</label
+        >
+        <!-- Trix Editor -->
+        <input id="content-input" type="hidden" name="content" />
+        <trix-editor
+          input="content-input"
+          class="trix-content prose min-h-[400px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
+        ></trix-editor>
+      </div>
+
+      <div>
+        <label
+          for="featured_image"
+          class="block text-sm font-medium text-gray-700"
+        >
+          Featured Image
+        </label>
+        <input
+          type="file"
+          id="featured_image"
+          name="featured_image"
+          accept="image/*"
+          class="mt-1 block w-full"
+        />
+      </div>
+
+      <div class="flex items-center">
+        <input
+          id="published"
+          name="published"
+          type="checkbox"
+          class="h-4 w-4 text-edpurple focus:ring-edpurple border-gray-300 rounded"
+        />
+        <label for="published" class="ml-2 block text-sm text-gray-900">
+          Publish immediately
+        </label>
+      </div>
+
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-edpurple hover:bg-edpurple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-edpurple"
+        >
+          Create Post
+        </button>
+      </div>
+
+      <div id="errorMessage" class="text-red-500 text-center hidden"></div>
+    </form>
+  </div>
+</AdminLayout>
+
+<style>
+  /* Custom styles for Trix editor */
+  trix-editor {
+    min-height: 400px;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  .trix-button-group {
+    border-color: #e5e7eb !important;
+  }
+
+  .trix-button {
+    border-bottom: none !important;
+  }
+
+  .trix-content {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+</style>
+
+<script>
+  import { pb } from "../../../lib/pocketbase";
+  import slugify from "slugify";
+
+  // Redirect if not authenticated
+  if (!pb.authStore.isValid) {
+    window.location.href = "/admin/login";
+  }
+
+  const form = document.getElementById("createPostForm");
+  const errorMessage = document.getElementById("errorMessage");
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    const title = (document.getElementById("title") as HTMLInputElement).value;
+    const content = (
+      document.getElementById("content-input") as HTMLInputElement
+    ).value;
+    const published = (document.getElementById("published") as HTMLInputElement)
+      .checked;
+    const fileInput = document.getElementById(
+      "featured_image"
+    ) as HTMLInputElement;
+
+    try {
+      formData.append("title", title);
+      formData.append("slug", slugify(title, { lower: true }));
+      formData.append("content", content);
+      formData.append("published", published.toString());
+
+      if (fileInput?.files?.[0]) {
+        formData.append("featured_image", fileInput.files[0]);
+      }
+
+      await pb.collection("posts").create(formData);
+      window.location.href = "/admin";
+    } catch (error) {
+      if (errorMessage) {
+        errorMessage.textContent =
+          "Error creating post: " + (error as Error).message;
+        errorMessage.classList.remove("hidden");
+      }
+    }
+  });
+
+  // Add autosave functionality
+  let autosaveTimeout: number;
+  const autosave = () => {
+    const title = (document.getElementById("title") as HTMLInputElement).value;
+    const content = (
+      document.getElementById("content-input") as HTMLInputElement
+    ).value;
+
+    if (title || content) {
+      localStorage.setItem("post-draft", JSON.stringify({ title, content }));
+    }
+  };
+
+  // Load draft if exists
+  const loadDraft = () => {
+    const draft = localStorage.getItem("post-draft");
+    if (draft) {
+      const { title, content } = JSON.parse(draft);
+      (document.getElementById("title") as HTMLInputElement).value = title;
+      (document.getElementById("content-input") as HTMLInputElement).value =
+        content;
+      const trixEditor = document.querySelector("trix-editor");
+      if (trixEditor) {
+        (trixEditor as any).editor.loadHTML(content);
+      }
+    }
+  };
+
+  // Setup autosave
+  document.addEventListener("trix-change", () => {
+    clearTimeout(autosaveTimeout);
+    autosaveTimeout = setTimeout(autosave, 1000) as unknown as number;
+  });
+
+  // Load draft when page loads
+  document.addEventListener("DOMContentLoaded", loadDraft);
+
+  // Clear draft after successful submission
+  form?.addEventListener("submit", () => {
+    localStorage.removeItem("post-draft");
+  });
+</script>

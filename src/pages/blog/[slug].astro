@@ -1,0 +1,142 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { pb } from "../../lib/pocketbase";
+import type { BlogPost } from "../../types/blog";
+
+export async function getStaticPaths() {
+  try {
+    // Get all published posts
+    const records = await pb.collection("posts").getFullList<BlogPost>({
+      filter: "published = true",
+      sort: "-created",
+    });
+
+    // Each item in the array must have a params property
+    return records.map((post) => {
+      return {
+        // params must contain slug since the file is named [slug].astro
+        params: {
+          slug: post.slug,
+        },
+        // props are passed to the component
+        props: {
+          title: post.title,
+          content: post.content,
+          created: post.created,
+          id: post.id,
+          collectionId: post.collectionId,
+          featured_image: post.featured_image,
+        },
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return [
+      {
+        params: { slug: "404" },
+        props: {
+          title: "Not Found",
+          content: "Post not found",
+          created: new Date().toISOString(),
+          id: "404",
+          collectionId: "404",
+          featured_image: "",
+        },
+      },
+    ];
+  }
+}
+
+// Get the post from props
+const { title, content, created, id, collectionId, featured_image } =
+  Astro.props;
+
+// Get the featured image URL
+const featuredImage = featured_image
+  ? `${import.meta.env.PUBLIC_POCKETBASE_URL}/api/files/${collectionId}/${id}/${featured_image}`
+  : "/assets/img/news-details-img-1.jpg";
+
+// Format the date
+const publishDate = new Date(created).toLocaleDateString("uz-UZ", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<Layout isHeader={true} title={title}>
+  <!-- MAIN CONTENT START -->
+  <div class="ed-event-details-content py-[120px] xl:py-[80px] md:py-[60px]">
+    <div
+      class="mx-[19.71%] xxxl:mx-[14.71%] xxl:mx-[9.71%] xl:mx-[5.71%] md:mx-[12px]"
+    >
+      <div class="flex gap-[30px] lg:gap-[20px] md:flex-col md:items-center">
+        <!-- left content -->
+        <div class="left grow space-y-[40px] md:space-y-[30px]">
+          <!-- post -->
+          <div>
+            <div class="img overflow-hidden rounded-[8px] mb-[30px] relative">
+              <img
+                src={featuredImage}
+                alt={title}
+                class="max-h-[380px] w-full aspect-[770/380] object-cover"
+              />
+            </div>
+
+            <!-- txt -->
+            <div>
+              <div class="mb-4 text-edgray">
+                <time datetime={created}>{publishDate}</time>
+              </div>
+
+              <h3
+                class="text-[30px] lg:text-[27px] sm:text-[24px] xxs:text-[22px] font-semibold text-black mb-[18px]"
+              >
+                {title}
+              </h3>
+
+              <!-- Blog content -->
+              <div class="prose max-w-none" set:html={content} />
+
+              <!-- actions -->
+              <div
+                class="border-y border-[#d9d9d9] py-[24px] flex items-center justify-between xs:flex-col xs:items-start gap-[20px] mt-8"
+              >
+                <!-- share options -->
+                <div class="flex gap-[28px] items-center">
+                  <h6 class="font-medium text-[16px] text-black">Share:</h6>
+                  <div class="flex gap-[15px] text-[16px]">
+                    <a
+                      href={`https://facebook.com/sharer/sharer.php?u=${Astro.url}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-[#757277] hover:text-edpurple"
+                    >
+                      <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a
+                      href={`https://twitter.com/intent/tweet?url=${Astro.url}&text=${encodeURIComponent(title)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-[#757277] hover:text-edpurple"
+                    >
+                      <i class="fa-brands fa-twitter"></i>
+                    </a>
+                    <a
+                      href={`https://www.linkedin.com/shareArticle?mini=true&url=${Astro.url}&title=${encodeURIComponent(title)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-[#757277] hover:text-edpurple"
+                    >
+                      <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
