@@ -7,8 +7,11 @@ export default defineConfig({
   integrations: [tailwind()],
   output: 'server',
   adapters: [vercel()],
+
   i18n: {
     defaultLocale: "uz",
     locales: ["ru", "uz"],
-  }
+  },
+
+  adapter: vercel()
 });
