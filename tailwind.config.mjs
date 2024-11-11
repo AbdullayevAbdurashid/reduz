@@ -19,7 +19,7 @@ module.exports = {
         },
         edgreen: "#00BFA6",
         edblue: "#241442",
-        edpurple: "#5B3AEE",
+        edpurple: "#9c1918",
         edyellow: "#E6272C",
         edoffwhite: "#FAF9F6",
         edgray: "#4F536C",
