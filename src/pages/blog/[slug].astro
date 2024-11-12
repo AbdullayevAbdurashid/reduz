@@ -2,7 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import { pb } from "../../lib/pocketbase";
 import type { BlogPost } from "../../types/blog";
-
+export const prerender = false;
 export async function getStaticPaths() {
   try {
     // Get all published posts
