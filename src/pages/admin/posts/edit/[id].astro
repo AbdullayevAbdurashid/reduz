@@ -146,7 +146,16 @@ try {
 <script>
   import { pb } from "../../../../lib/pocketbase";
   import slugify from "slugify";
+  import { redeployWebhook } from "../../../../utils/redeploy";
 
+  async function handleRedeploy() {
+    try {
+      const result = await redeployWebhook();
+      console.log("Redeploy success:", result);
+    } catch (error) {
+      console.error("Redeploy failed:", error);
+    }
+  }
   // Redirect if not authenticated
   if (!pb.authStore.isValid) {
     window.location.href = "/admin/login";
@@ -181,6 +190,10 @@ try {
       }
 
       await pb.collection("posts").update(postId, formData);
+      handleRedeploy();
+      setTimeout(() => {
+        window.location.href = "/admin";
+      }, 500);
       window.location.href = "/admin";
     } catch (error) {
       if (errorMessage) {

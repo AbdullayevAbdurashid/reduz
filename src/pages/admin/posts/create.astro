@@ -110,10 +110,18 @@ export const prerender = false;
 <script>
   import { pb } from "../../../lib/pocketbase";
   import slugify from "slugify";
-
+  import { redeployWebhook } from "../../../utils/redeploy";
   // Redirect if not authenticated
   if (!pb.authStore.isValid) {
     window.location.href = "/admin/login";
+  }
+  async function handleRedeploy() {
+    try {
+      const result = await redeployWebhook();
+      console.log("Redeploy success:", result);
+    } catch (error) {
+      console.error("Redeploy failed:", error);
+    }
   }
 
   const form = document.getElementById("createPostForm");
@@ -144,7 +152,10 @@ export const prerender = false;
       }
 
       await pb.collection("posts").create(formData);
-      window.location.href = "/admin";
+      handleRedeploy();
+      setTimeout(() => {
+        window.location.href = "/admin";
+      }, 500);
     } catch (error) {
       if (errorMessage) {
         errorMessage.textContent =
