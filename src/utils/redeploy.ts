@@ -1,5 +1,10 @@
 export async function redeployWebhook() {
   try {
+    //disable if in development
+    if (import.meta.env.MODE && import.meta.env.MODE === "development") {
+      console.log("Development mode detected, skipping redeploy.");
+      return;
+    }
     const response = await fetch(
       "https://api.vercel.com/v1/integrations/deploy/prj_qse5gcNRk2k7Gvs2er8Yetpvo1iy/o4AoDcX4sH",
       {
